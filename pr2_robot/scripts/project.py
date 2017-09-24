@@ -24,6 +24,8 @@ from pr2_robot.srv import *
 from rospy_message_converter import message_converter
 import yaml
 
+import rospkg
+
 
 # Helper function to get surface normals
 def get_normals(cloud):
@@ -292,7 +294,11 @@ if __name__ == '__main__':
 
 
 #    # TODO: Load Model From disk
-    model = pickle.load(open('model.sav', 'rb'))
+    # use rospack to get the full path    
+    rospack = rospkg.RosPack()
+    model_path = rospack.get_path('pr2_robot') + '/model.sav'
+    # open the model
+    model = pickle.load(open(model_path, 'rb'))
     clf = model['classifier']
     encoder = LabelEncoder()
     encoder.classes_ = model['classes']
