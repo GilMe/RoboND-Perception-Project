@@ -278,6 +278,7 @@ def pr2_mover(object_list):
         
         # Get the label        
         label = picklist_object['name']
+        rospy.loginfo("Picking up item {} on the list which is {}".format(index+1,label))
 
         # The name (label) of the object
         object_name = String()
@@ -300,9 +301,9 @@ def pr2_mover(object_list):
         # TODO: Assign the arm to be used for pick_place
         arm_name = String()
         if picklist_object['group'] == 'green':
-            arm_name.data = 'left'            
+            arm_name.data = 'right'            
         else:
-            arm_name.data = 'right'
+            arm_name.data = 'left'
 
         #assign the object placement pose (the pose of the target bin)
         place_pose = Pose()
@@ -332,7 +333,10 @@ def pr2_mover(object_list):
             print "Service call failed: %s"%e
 
     # TODO: Output your request parameters into output yaml file
-
+    rospack = rospkg.RosPack()
+    output_yaml_path = rospack.get_path('pr2_robot') + "/output_1.yaml"
+    send_to_yaml(output_yaml_path, dict_list)
+    rospy.loginfo('Created yaml file')
 
 
 if __name__ == '__main__':
