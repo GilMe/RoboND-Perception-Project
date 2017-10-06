@@ -53,7 +53,13 @@ Lastly I converted the table, object and cluster point clouds to the correct ROS
 
 #### 3. Complete Exercise 3 Steps.  Features extracted and SVM trained.  Object recognition implemented.
 
-For the classifaction a SVM was created. The features that were used were the color histogram and normals histogram of the object, In order to create the SVM we used the train_svm.py script that we were given in the sensor_stick project. I made sure to train the SVM for every type of object that will appear in the gazebo simulations. The SVM was stored in as 'model.sav' in pr2_robot path. This model was loaded in the beginning of he program in `__main__`.
+For the classifaction a SVM was created. The features that were used were the color histogram and normals histogram of the object, In order to create the SVM we used the train_svm.py script that we were given in the sensor_stick project. I made sure to train the SVM for every type of object that will appear in the gazebo simulations. 
+
+Here is the normalized confusion matrix
+
+![demo-1](Normalized_confusion_matrix.png)
+
+The SVM was stored in as 'model.sav' in pr2_robot path. This model was loaded in the beginning of he program in `__main__`.
 
 Since at this stage we have the SVM what we did after clustering was to take the points in the point cloud for each cluster and calculte the color histogram and normal histogram feature. We then classify each cluster using the SVM and give it the object the appropriate label. We publish this label as a marker above the point cloud of the cluster for debugging.
 
@@ -78,6 +84,22 @@ These ROS messages are sent to the pick_place_routine service so that the robot 
 All these messages are put into a list of dictionaries (one for each object in the pick list) to finally output into a yaml file. 
 
 ####Important Note: The 'output_*.yaml' files can be found in pr2_robot directory
+
+---
+
+Here are screenshots that deplict object recognition for the three worlds
+
+####World 1:
+
+![demo-2](world1.png)
+
+####World 2:
+
+![demo-2](world2.png)
+
+####World 3:
+
+![demo-2](world3.png)
 
 ---
 
